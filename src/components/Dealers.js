@@ -31,8 +31,8 @@ const Dealers = () => {
 
   const onDeleteDealer = async (id) => {
     if (window.confirm("Are you sure you want to delete this Dealer?")) {
-      await db.collection("dealer").doc(id).delete();
-      toast("Dealer Roved Succesufully", {
+      await db.collection("dealers").doc(id).delete();
+      toast("Dealer Removed Succesufully", {
         type: "error",
         autoClose: 1700,
       });
@@ -85,7 +85,6 @@ const Dealers = () => {
           </div>
         ))}
       </div>
-      b
     </>
   );
 };

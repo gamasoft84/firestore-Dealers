@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { db } from "../db/firebase";
 
 const DealerForm = (props) => {
@@ -13,8 +14,29 @@ const DealerForm = (props) => {
 
   const [values, setValues] = useState(initialStateValues);
 
+ const validateFieldsRequired = () =>{
+   let messgeError = '';
+   if(!values.name){
+     messgeError = 'Please validate Dealer Name';
+   }else if(!values.code){
+     messgeError = 'Please validate Dealer Code';
+   }
+
+   if(messgeError){
+    toast(messgeError, {
+      type: "warning",
+      autoClose: 2000,
+     });
+    }
+
+   return messgeError === '' ? true: false;
+ }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(!validateFieldsRequired()){
+      return false;
+    }
     props.addDealer(values);
     setValues(initialStateValues);
   };
