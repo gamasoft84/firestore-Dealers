@@ -8,7 +8,7 @@ const DealerForm = (props) => {
         state: '',
         phone: '',
         latitude: '',
-        longitud: ''
+        longitude: ''
     };
 
   const [values, setValues] = useState(initialStateValues); 
@@ -105,9 +105,9 @@ const DealerForm = (props) => {
           type="text"
           className="form-control"
           placeholder="longitud"
-          name="longitud"
+          name="longitude"
           onChange={handleInputChange}
-          value={values.longitud}
+          value={values.longitude}
         />
       </div>
 
