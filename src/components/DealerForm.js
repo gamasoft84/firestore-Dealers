@@ -1,29 +1,41 @@
-import React,{useState} from "react";
+import React, { useEffect, useState } from "react";
+import { db } from "../db/firebase";
 
 const DealerForm = (props) => {
+  const initialStateValues = {
+    name: "",
+    code: "",
+    state: "",
+    phone: "",
+    latitude: "",
+    longitude: "",
+  };
 
-   const initialStateValues = {
-        name: '',
-        code: '',
-        state: '',
-        phone: '',
-        latitude: '',
-        longitude: ''
-    };
-
-  const [values, setValues] = useState(initialStateValues); 
+  const [values, setValues] = useState(initialStateValues);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     props.addDealer(values);
-    setValues(initialStateValues)
+    setValues(initialStateValues);
   };
 
-  const handleInputChange = (e) =>{
-    const {name,value} = e.target;
-    setValues({...values, [name]:value})
-    
-  }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+  };
+
+  const getDealerById = async (id) => {
+    const doc = await db.collection("dealers").doc(id).get();
+    setValues({ ...doc.data() });
+  };
+
+  useEffect(() => {
+    if (props.currentId === "") {
+      setValues({ ...initialStateValues });
+    } else {
+      getDealerById(props.currentId);
+    }
+  }, [props.currentId]);
 
   return (
     <form className="card card-body" onSubmit={handleSubmit}>
@@ -111,7 +123,9 @@ const DealerForm = (props) => {
         />
       </div>
 
-      <button className="btn btn-primary btn-block">Save</button>
+      <button className="btn btn-primary btn-block">
+        {props.currentId === '' ? 'Save' : 'Update'}
+      </button>
     </form>
   );
 };
