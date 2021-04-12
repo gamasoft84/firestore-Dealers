@@ -52,9 +52,9 @@ const DealerForm = (props) => {
   };
 
   useEffect(() => {
-    if (props.currentId === "") {
+    if (props.currentId === "") {//save
       setValues({ ...initialStateValues });
-    } else {
+    } else {//update
       getDealerById(props.currentId);
     }
   }, [props.currentId]);
